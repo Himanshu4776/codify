@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-import { Editor } from "./Editor";
+import { Editor } from "./components/Editor";
 import { useAtomValue, useSetAtom } from "jotai";
 import { langTypeAtom } from "./hooks/constants";
 
