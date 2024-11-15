@@ -6,6 +6,7 @@ import { langTypeAtom } from "./hooks/constants";
 import { getDefaultCodeValue } from "./utils/lang-utils";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { ConsoleOutput } from "./components/ConsoleOutput";
 
 function App() {
   const selectedLang = useAtomValue(langTypeAtom);
@@ -21,6 +22,7 @@ function App() {
     <div className="flex flex-col h-screen bg-gray-100 dark:bg-gray-900">
       <Header language={selectedLang} theme={theme} setTheme={setTheme} setNewLang={setLang} />
       <Editor lang={selectedLang} theme={theme} setCodeValue={setValue} code={value} />
+      <ConsoleOutput output={""} />
       <Footer lang={selectedLang} theme={theme} />
     </div>
   );
