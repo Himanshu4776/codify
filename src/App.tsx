@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./styles.css";
 import { Editor } from "./components/Editor";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { langTypeAtom } from "./hooks/constants";
 import { getDefaultCodeValue } from "./utils/lang-utils";
 import { Header } from "./components/Header";
@@ -9,14 +9,10 @@ import { Footer } from "./components/Footer";
 import { ConsoleOutput } from "./components/ConsoleOutput";
 
 function App() {
-  const selectedLang = useAtomValue(langTypeAtom);
-  const setLang = useSetAtom(langTypeAtom);
+  const [selectedLang, setLang] = useAtom(langTypeAtom);
 
   const [value, setValue] = React.useState(getDefaultCodeValue(selectedLang));
   const [theme, setTheme] = React.useState<string>("Github Light");
-
-  console.log("code: ", value);
-  
 
   return (
     <div className="flex flex-col h-screen bg-gray-100 dark:bg-gray-900">
