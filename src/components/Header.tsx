@@ -3,16 +3,26 @@ import { THEME_OPTIONS } from "../utils/theme-utils";
 import { SUPPORTED_LANGUAGES } from "../utils/lang-utils";
 
 export interface HeaderProps {
-    language: "javascript" | "cpp" | "java" | "python";
-    setNewLang: (lang: "javascript" | "cpp" | "java" | "python") => void;
-    theme: string;
-    setTheme: (val: string) => void;
+  language: "javascript" | "cpp" | "java" | "python";
+  setNewLang: (lang: "javascript" | "cpp" | "java" | "python") => void;
+  theme: string;
+  setTheme: (val: string) => void;
+  selectedPath: "web" | "classical" | null;
 }
 
-export function Header({language, theme, setTheme, setNewLang}: HeaderProps) {
-    return (
-        <header className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 border-b">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Code Editor</h1>
+export function Header({
+  language,
+  theme,
+  setTheme,
+  setNewLang,
+  selectedPath,
+}: HeaderProps) {
+  return (
+    <header className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 border-b">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        Code Editor
+      </h1>
+      {selectedPath === "classical" && (
         <div className="flex space-x-4">
           <div className="relative">
             <select
@@ -34,7 +44,11 @@ export function Header({language, theme, setTheme, setNewLang}: HeaderProps) {
           <div className="relative">
             <select
               value={language}
-              onChange={(e) => setNewLang(e.target.value as "javascript" | "cpp" | "java" | "python")}
+              onChange={(e) =>
+                setNewLang(
+                  e.target.value as "javascript" | "cpp" | "java" | "python"
+                )
+              }
               className="appearance-none bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
               aria-label="Select language"
             >
@@ -49,6 +63,7 @@ export function Header({language, theme, setTheme, setNewLang}: HeaderProps) {
             </div>
           </div>
         </div>
-      </header>
-    );
+      )}
+    </header>
+  );
 }
