@@ -3,25 +3,25 @@ import { Plus, X } from 'lucide-react';
 
 export interface ConsoleOutputProps {
   output: string[] | string;
+  setOutput: (val: string) => void;
 }
 
-export function ConsoleOutput({ output }: ConsoleOutputProps){
+export function ConsoleOutput({ output, setOutput }: ConsoleOutputProps){
+  const [isFullScreen, setIsFullScreen] = React.useState(false);
   function handleFullScreenConsole() {
-    const consoleElement = document.querySelector('.console-output');
-    if (consoleElement) {
-      consoleElement.classList.toggle('fullscreen');
-    }
+    setIsFullScreen(true);
   }
 
   function handleMinimizeConsole() {
-    const consoleElement = document.querySelector('.console-output');
-    if (consoleElement) {
-      consoleElement.classList.remove('fullscreen');
-    }
+    setIsFullScreen(false);
+  }
+
+  function handleClearConsole() {
+    setOutput('');
   }
 
   return (
-    <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm w-full mx-auto my-4">
+    <div className={`bg-gray-900 rounded-lg px-4 scroll-m-4 font-mono text-sm w-full ${isFullScreen ? 'h-full' : 'h-[125px]'} flex flex-col mx-auto`}>
       <div className="flex items-center justify-between mb-2">
         <div className="flex space-x-2">
           <div className="w-3 h-3 rounded-full bg-red-500">
@@ -36,10 +36,13 @@ export function ConsoleOutput({ output }: ConsoleOutputProps){
             </button>
           </div>
         </div>
+        <span>
+          <button onClick={handleClearConsole} className='text-gray-400 text-xs bg-red-600 rounded-sm p-1'>clear console</button>
+        </span>
         <span className="text-gray-400 text-xs">Console Output</span>
       </div>
       
-      <div className="bg-black rounded p-4 overflow-auto max-h-96">
+      <div className="bg-black rounded p-4 flex-1 overflow-y-auto">
         {Array.isArray(output) ? (
           output.map((line, index) => (
             <div key={index} className="text-green-400">

@@ -18,7 +18,7 @@ export function Header({language, theme, setTheme, setNewLang}: HeaderProps) {
             <select
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
-              className="appearance-none bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
               aria-label="Select theme"
             >
               {THEME_OPTIONS.map((themeName) => (
@@ -35,7 +35,7 @@ export function Header({language, theme, setTheme, setNewLang}: HeaderProps) {
             <select
               value={language}
               onChange={(e) => setNewLang(e.target.value as "javascript" | "cpp" | "java" | "python")}
-              className="appearance-none bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500"
               aria-label="Select language"
             >
               {Object.keys(SUPPORTED_LANGUAGES).map((languageName) => (
