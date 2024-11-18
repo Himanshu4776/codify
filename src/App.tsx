@@ -8,6 +8,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { ConsoleOutput } from "./components/ConsoleOutput";
 import LandingPage from "./components/LandingPage";
+import WebDevEditor from "./web-editor/WebDevEditor";
 
 function App() {
   const [selectedLang, setLang] = useAtom(langTypeAtom);
@@ -16,7 +17,7 @@ function App() {
   );
 
   const [value, setValue] = React.useState(getDefaultCodeValue(selectedLang));
-  const [theme, setTheme] = React.useState<string>("Github Light");
+  const [theme, setTheme] = React.useState<string>("Github Dark");
   const outputValue = `lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. 
   lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit.
   lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -39,9 +40,14 @@ function App() {
         setTheme={setTheme}
         setNewLang={setLang}
         selectedPath={selectedPath}
+        setSelectedPath={setSelectedPath}
       />
       {selectedPath == null ? (
         <LandingPage setSelectedPath={setSelectedPath} />
+      ) : selectedPath === 'web' ? (
+        <WebDevEditor
+          theme={theme}
+        />
       ) : (
         <>
           <Editor

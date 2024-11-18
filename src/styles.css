@@ -6,3 +6,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .editor-title {
+    @apply flex justify-between bg-gray-800 text-white p-2 rounded-t-lg;
+  }
+  .expand-collapse-btn {
+    @apply ml-2 bg-transparent border-none;
+  }
+  .code-mirror-wrapper {
+    @apply flex-grow rounded-b-lg overflow-hidden;
+  }
+}

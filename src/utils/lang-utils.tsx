@@ -2,6 +2,13 @@ import { javascript } from "@codemirror/lang-javascript";
 import { cpp } from "@codemirror/lang-cpp";
 import { java } from "@codemirror/lang-java";
 import { python } from "@codemirror/lang-python";
+import { html } from "@codemirror/lang-html"
+import { css } from "@codemirror/lang-css"
+import { linter, lintGutter, Diagnostic } from "@codemirror/lint"
+import { EditorView } from "@codemirror/view"
+import { syntaxTree } from "@codemirror/language"
+
+
 
 export const SUPPORTED_LANGUAGES = {
   javascript: "javascript",
@@ -77,4 +84,24 @@ export function getDefaultCodeValue(language: SupportedLanguage) {
     default:
       return "";
   }
+}
+
+export const createLinter = (language: string) => {
+  return linter((view: EditorView) => {
+    const diagnostics: Diagnostic[] = []
+    const tree = syntaxTree(view.state)
+    
+    tree.cursor().iterate(node => {
+      if (node.type.isError) {
+        diagnostics.push({
+          from: node.from,
+          to: node.to,
+          severity: 'error',
+          message: `Syntax error in ${language}`
+        })
+      }
+    })
+    
+    return diagnostics
+  })
 }
