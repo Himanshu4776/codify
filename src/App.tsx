@@ -9,6 +9,7 @@ import { Footer } from "./components/Footer";
 import { ConsoleOutput } from "./components/ConsoleOutput";
 import LandingPage from "./components/LandingPage";
 import WebDevEditor from "./web-editor/WebDevEditor";
+import { ConsoleInput } from "./components/ConsoleInput";
 
 function App() {
   const [selectedLang, setLang] = useAtom(langTypeAtom);
@@ -27,6 +28,7 @@ function App() {
   lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. 
   lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit.`;
   const [output, setOutput] = React.useState(outputValue);
+  const [inputValue, setInputValue] = React.useState('');
 
   useEffect(() => {
     setSelectedPath(null);
@@ -56,7 +58,10 @@ function App() {
             setCodeValue={setValue}
             code={value}
           />
-          <ConsoleOutput output={output} setOutput={setOutput} />
+          <div className="flex">
+            <ConsoleOutput output={output} setOutput={setOutput} />
+            <ConsoleInput setInput={setInputValue} />
+          </div>
         </>
       )}
       <Footer lang={selectedLang} theme={theme} selectedPath={selectedPath} />

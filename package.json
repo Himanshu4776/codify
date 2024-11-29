@@ -20,6 +20,7 @@
     "@uiw/codemirror-theme-github": "^4.23.6",
     "@uiw/codemirror-theme-solarized": "^4.23.6",
     "@uiw/react-codemirror": "4.23.5",
+    "axios": "^1.7.8",
     "csslint": "^1.0.5",
     "eslint": "^8.57.1",
     "jotai": "2.10.0",
