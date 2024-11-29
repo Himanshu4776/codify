@@ -31,7 +31,6 @@ export const useJudge0 = () => {
       params: { base64_encoded: 'true', fields: '*' },
       headers: {
         'X-RapidAPI-Key': process.env.REACT_APP_JUDGE0_GET_SUBMISSION_API_KEY,
-        // 'X-RapidAPI-Key': '3ed7a75b44mshc9e28568fe0317bp17b5b2jsn6d89943165d8',
         'X-RapidAPI-Host': 'judge0-ce.p.rapidapi.com'
       }
     };
