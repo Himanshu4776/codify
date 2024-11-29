@@ -42,8 +42,7 @@ export function ConsoleInput({ setInput }: ConsoleOutputProps){
       </div>
       
       <div className="bg-black rounded p-4 flex-1 overflow-y-auto">
-      {/* <span className="text-gray-500 mr-2">{'>'}</span> */}
-        <textarea name="input-console" id="input-console" className='w-full h-full bg-inherit text-green-500 border-none border-b-gray-950 focus:border-none focus:border-b-gray-950 outline-none'>
+        <textarea onChange={(e) => setInput(e.target.value)} name="input-console" id="input-console" className='w-full h-full bg-inherit text-green-500 border-none border-b-gray-950 focus:border-none focus:border-b-gray-950 outline-none'>
           type input here..
         </textarea>
       </div>

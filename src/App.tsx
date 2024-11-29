@@ -10,62 +10,85 @@ import { ConsoleOutput } from "./components/ConsoleOutput";
 import LandingPage from "./components/LandingPage";
 import WebDevEditor from "./web-editor/WebDevEditor";
 import { ConsoleInput } from "./components/ConsoleInput";
+import { useJudge0 } from "./hooks/useJudge0";
 
 function App() {
-  const [selectedLang, setLang] = useAtom(langTypeAtom);
-  const [selectedPath, setSelectedPath] = useState<"web" | "classical" | null>(
-    null
-  );
+    const [selectedLang, setLang] = useAtom(langTypeAtom);
+    const [selectedPath, setSelectedPath] = useState<"web" | "classical" | null>(
+      null
+    );
 
-  const [value, setValue] = React.useState(getDefaultCodeValue(selectedLang));
-  const [theme, setTheme] = React.useState<string>("Github Dark");
-  const outputValue = `lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-  lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-  lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-  lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-  lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit. lorem ipsum dolor sit amet, consectetur adipiscing elit.`;
-  const [output, setOutput] = React.useState(outputValue);
-  const [inputValue, setInputValue] = React.useState('');
+    const [value, setValue] = React.useState(getDefaultCodeValue(selectedLang));
+    const [theme, setTheme] = React.useState<string>("Github Dark");
+    const [output, setOutput] = useState<string>('');
+    const [inputValue, setInputValue] = React.useState('');
+    const { postSubmission, getOutput } = useJudge0();
 
-  useEffect(() => {
-    setSelectedPath(null);
-  }, []);
+    const handleRunCode = async (code: string, language: "javascript" | "cpp" | "java" | "python") => {
+      try {
+        const languageIds = {
+          javascript: 63,
+          python: 71,
+          cpp: 54,
+          java: 62
+        };
+      
+        const token = await postSubmission(languageIds[language], btoa(code), inputValue === '' ? btoa('') : inputValue);
+        const result = await getOutput(token);
+      
+        // Decode the base64 output and set it to console
+        const decodedOutput = atob(result.stdout || '');
+        setOutput(decodedOutput || 'No output');
+      
+      } catch (error) {
+        setOutput('Error executing code');
+        console.error('Error:', error);
+      }
+    };
 
-  return (
-    <div className="flex flex-col h-screen bg-gray-100 dark:bg-gray-900">
-      <Header
-        language={selectedLang}
-        theme={theme}
-        setTheme={setTheme}
-        setNewLang={setLang}
-        selectedPath={selectedPath}
-        setSelectedPath={setSelectedPath}
-      />
-      {selectedPath == null ? (
-        <LandingPage setSelectedPath={setSelectedPath} />
-      ) : selectedPath === 'web' ? (
-        <WebDevEditor
+    console.log("code: ", value);
+    
+
+    useEffect(() => {
+      setSelectedPath(null);
+    }, []);
+
+    return (
+      <div className="flex flex-col h-screen bg-gray-100 dark:bg-gray-900">
+        <Header
+          language={selectedLang}
           theme={theme}
+          setTheme={setTheme}
+          setNewLang={setLang}
+          selectedPath={selectedPath}
+          setSelectedPath={setSelectedPath}
+          code={value}
+          setCodeValue={setValue}
+          onRunCode={handleRunCode}
         />
-      ) : (
-        <>
-          <Editor
-            lang={selectedLang}
+        {selectedPath == null ? (
+          <LandingPage setSelectedPath={setSelectedPath} />
+        ) : selectedPath === 'web' ? (
+          <WebDevEditor
             theme={theme}
-            setCodeValue={setValue}
-            code={value}
           />
-          <div className="flex">
-            <ConsoleOutput output={output} setOutput={setOutput} />
-            <ConsoleInput setInput={setInputValue} />
-          </div>
-        </>
-      )}
-      <Footer lang={selectedLang} theme={theme} selectedPath={selectedPath} />
-    </div>
-  );
+        ) : (
+          <>
+            <Editor
+              lang={selectedLang}
+              theme={theme}
+              setCodeValue={setValue}
+              code={value}
+            />
+            <div className="flex">
+              <ConsoleOutput output={output} setOutput={setOutput} />
+              <ConsoleInput setInput={setInputValue} />
+            </div>
+          </>
+        )}
+        <Footer lang={selectedLang} theme={theme} selectedPath={selectedPath} />
+      </div>
+    );
 }
+
 export default App;
