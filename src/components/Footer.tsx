@@ -12,7 +12,7 @@ export function Footer({ lang, theme, selectedPath }: FooterProps) {
           ? `Current language: ${
               lang.charAt(0).toUpperCase() + lang.slice(1)
             } | Theme: ${theme}`
-          : "© 2023 Code Editor. All rights reserved."}
+          : "© 2024 Codify Code Editor. All rights reserved."}
       </p>
     </footer>
   );

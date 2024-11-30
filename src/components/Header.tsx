@@ -35,9 +35,9 @@ export function Header({
 
   return (
     <header className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 border-b">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-        Code Editor
-      </h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white center">
+          Codify Code Editor
+        </h1>
       {selectedPath === "classical" && (
         <>
           <button 
@@ -103,12 +103,15 @@ export function Header({
       {selectedPath === "web" && (
         <div className="flex space-x-4">
           <button
-            onClick={() => setSelectedPath(null)}
-            className="p-2 rounded-full flex justify-center items-center text-red-700 bg-red-700 hover:bg-gray-200 dark:hover:bg-gray-700"
-            aria-label="Clear selection"
-          >
-            <X className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-          </button>
+              onClick={() => setSelectedPath(null)}
+              className="p-2 rounded flex justify-center items-center text-red-700 bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700"
+              aria-label="Clear selection"
+            >
+              <LogOut className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+              <p className="pl-2 text-gray-600 dark:text-gray-300">
+                Back to Menu
+              </p>
+            </button>
           <div className="relative">
             <select
               value={theme}
